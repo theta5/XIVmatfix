@@ -50,36 +50,44 @@ class ThetaPanel(bpy.types.Panel):
         row.scale_y = 2.0
         row.operator("myops.fixall", text = "Apply to ALL nodes")
 
-#class ThetaGranularControls(bpy.types.Panel):
-#    bl_label = "Granular Controls"
-#    bl_idname = "PT_Thetamatpanel2"
-#    bl_space_type = 'VIEW_3D'
-#    bl_region_type = 'UI'
-#    bl_category = 'MatFixer'
-#    bl_options = 'DEFAULT_CLOSED'
+class ThetaGranularControls(bpy.types.Panel):
+    bl_label = "Granular Controls"
+    bl_idname = "PT_Thetamatpanel2"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'XIVMatFixer'
+    bl_options = {'DEFAULT_CLOSED'}
     
-#    def draw(self, context):
-#        layout = self.layout
+    def draw(self, context):
+        layout = self.layout
 
-#        scene = context.scene
+        scene = context.scene
 
-#        layout.label(text="Individual Functions")
+        layout.label(text="Individual Functions")
 
-#        row = layout.row()
-#        row.scale_y = 1.0
-#        row.operatorw("myops.testbutton", text = "Template Button")
+        row = layout.row()
+        row.scale_y = 1.0
+        row.operator("myops.texture4x", text = "4X Texture Maps")
     
 # --- Ops ---
 # ------------------------------------------------------------------------------------
 
+class Texture4x(bpy.types.Operator):
+    bl_idname = "myops.texture4x"
+    bl_label = "4X Texture Maps"
+    bl_description = "Makes textures 4x the size originally mapped (for some FFXIV Terrain Exports)"
 
+    def execute(self, context):
+        selected_material = bpy.context.active_object.active_material
+        texture_4x(selected_material, selected_material.node_tree)
+        return {"FINISHED"}
 
 class AppendNodes(bpy.types.Operator): # Appends custom nodes to file
     bl_idname = "myops.nodeappend"
     bl_label = "Append Material Nodegroups"
     bl_description = "Appends Material Nodes to the file (DO THIS ONLY ONCE!)"
 
-    def execute(self,context):
+    def execute(self, context):
         check_for_nodes()
         return {"FINISHED"}
         
@@ -116,6 +124,8 @@ def append_nodegroups():
     path = os.path.dirname(__file__) + '/blends/nodegroups.blend\\NodeTree\\'
     import_node = 'Diff-Spec-Converter'
     bpy.ops.wm.append( filename = import_node, directory = path)
+    import_node2 = 'Texture-4X'
+    bpy.ops.wm.append( filename = import_node2, directory = path)    
 
 def change_material(mat):
 
@@ -222,7 +232,7 @@ def place_node(node, x_pos, y_pos):
     node.location.x = x_pos
     node.location.y = y_pos
 
-def check_for_nodes():
+def check_for_nodes(): #TODO: Check for all nodes?
     nodesappended = False
     for n in bpy.data.node_groups:
         if n.name == 'Diff-Spec-Converter':
@@ -230,10 +240,26 @@ def check_for_nodes():
     if nodesappended == False:
         append_nodegroups()
 
+def texture_4x(mat, node_tree):
+    check_for_nodes()
+    nodeexists = False
+    for node in mat.node_tree.nodes:
+        if node.name == 'Texture-4X':
+            nodeexists = True
+    if nodeexists == False:
+        groupnode = node_tree.nodes.new('ShaderNodeGroup')
+        groupnode.node_tree = bpy.data.node_groups['Texture-4X']
+        move_node(groupnode, -600, 0)
+    for node in mat.node_tree.nodes:
+        if node.bl_idname == 'ShaderNodeTexImage':
+            node_tree.links.new(groupnode.outputs[0], node.inputs[0])
+        
+        
+
 # --- Main Addon Stuff ---
 # ------------------------------------------------------------------------------------
 
-classes = [ThetaPanel, MaterialFix, FixAllNodes]
+classes = [ThetaPanel, MaterialFix, FixAllNodes, ThetaGranularControls, Texture4x]
 
 def register():
     for cls in classes:
