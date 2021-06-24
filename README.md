@@ -14,3 +14,6 @@ Adds custom nodegroup to more closely match ingame shading and material settings
 Adds custom normal map interperetater nodegroup to fix compatibility issues with FFXIV's "bump" style normal maps.
 Removes unneeded material nodes (emission and duplicate diffuse for alpha).
 Reorganizes material node tree.
+
+Granular Control features:
+automatically quadruple the size of texture maps on the selected node (to handle FFXIV's terrain mapping)
