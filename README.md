@@ -2,9 +2,9 @@
 
 9/21/2021 | Hey everyone! If you're finding this through a Meku related source, please note that this addon is currently broken if you're using mektools, as we ended up sharing some code, and requiring a refactor on this addon I just haven't found time for. Please uninstall this addon for the time being if you are experiencing issues with either this addon or mektools.
 
-XIV Material Fix Addon (for Godbert and Textools furniture and map assets)
+XIV Material Fix Addon (for Godbert and Textools furniture and map assets) Written by Theta Five and Skulblaka Drotningu
+
 If you like this or have a feature request, please show your support for my work at https://ko-fi.com/thetafive
-Written by Theta Five and Skulblaka Drotningu
 
 This Blender addon performs several functions to fix exported terrain, building, and furniture models exported from Godbert tools and Textools from FFXIV. 
 
