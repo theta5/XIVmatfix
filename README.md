@@ -1,4 +1,7 @@
 # XIVmatfix
+
+9/21/2021 | Hey everyone! If you're finding this through a Meku related source, please note that this addon is currently broken if you're using mektools, as we ended up sharing some code, and requiring a refactor on this addon I just haven't found time for. Please uninstall this addon for the time being if you are experiencing issues with either this addon or mektools.
+
 XIV Material Fix Addon (for Godbert and Textools furniture and map assets)
 If you like this or have a feature request, please show your support for my work at https://ko-fi.com/thetafive
 
