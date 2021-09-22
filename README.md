@@ -4,6 +4,7 @@
 
 XIV Material Fix Addon (for Godbert and Textools furniture and map assets)
 If you like this or have a feature request, please show your support for my work at https://ko-fi.com/thetafive
+Written by Theta Five and Skulblaka Drotningu
 
 This Blender addon performs several functions to fix exported terrain, building, and furniture models exported from Godbert tools and Textools from FFXIV. 
 
